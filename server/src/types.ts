@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 export interface SpotifyTokensReponse {
   success: true;
@@ -21,8 +22,14 @@ export interface SpotifyRegularError {
 }
 
 declare module 'express-session' {
-  // eslint-disable-next-line no-unused-vars
   interface SessionData {
+    accessToken?: string;
+    refreshToken?: string;
+  }
+}
+
+export interface ApolloContext {
+  user: {
     accessToken: string;
     refreshToken: string;
   }

@@ -3,6 +3,32 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+"""Currently authorized user's profile"""
+type CurrentUserProfile {
+  display_name: String!
+  email: String!
+  external_urls: ExternalUrls!
+  followers: Followers!
+  id: ID!
+  images: [Image!]!
+  product: String!
+}
+
+type ExternalUrls {
+  spotify: String!
+}
+
+type Followers {
+  href: String
+  total: Int!
+}
+
+type Image {
+  height: Int
+  url: String!
+  width: Int
+}
+
 type Query {
-  hello: String!
+  getCurrentUserProfile: CurrentUserProfile!
 }

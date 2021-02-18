@@ -1,3 +1,5 @@
+import { RequestInit } from 'node-fetch';
+
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
@@ -19,3 +21,10 @@ export const objectToWWWFormUrlEncoded = (obj: any) =>
   Object.keys(obj)
     .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`)
     .join('&');
+
+export const spotifyGetOpts = (token: string): RequestInit => ({
+  method: 'GET',
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});

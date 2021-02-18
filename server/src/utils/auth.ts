@@ -1,8 +1,8 @@
 import fetch from 'node-fetch';
 import queryString from 'query-string';
 import config from '../config/config';
+import { spotifyAuthUrl, spotifyRedirectUri, spotifyTokenUrl } from '../consts';
 import { SpotifyAuthenticationError, SpotifyTokensReponse } from '../types';
-import { spotifyAuthUrl, spotifyRedirectUri, spotifyTokenUrl } from './consts';
 import { objectToWWWFormUrlEncoded } from './utils';
 
 export const createSpotifyAuthUri = (state: string): string => {

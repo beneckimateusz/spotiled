@@ -2,30 +2,33 @@
 /* eslint-disable no-console */
 require('dotenv').config();
 
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, AuthenticationError } from 'apollo-server-express';
 import http from 'http';
 import 'reflect-metadata';
-import { buildSchema, Query, Resolver } from 'type-graphql';
+import { buildSchema } from 'type-graphql';
 import app from './app';
 import config from './config/config';
-
-@Resolver(String)
-class HelloResolver {
-  @Query(() => String)
-  // eslint-disable-next-line class-methods-use-this
-  hello() {
-    return 'Hello World!';
-  }
-}
+import UserResolver from './graphql/resolvers/userResolver';
 
 async function main() {
   const schema = await buildSchema({
-    resolvers: [HelloResolver], // yet missing
+    resolvers: [UserResolver],
     emitSchemaFile: true,
   });
 
   const server = new ApolloServer({
     schema,
+    context: ({ req }) => {
+      const { accessToken, refreshToken } = req.session;
+
+      if (!accessToken || !refreshToken) {
+        throw new AuthenticationError('not authenticated');
+      }
+
+      const user = { accessToken, refreshToken };
+
+      return { user };
+    },
   });
 
   server.applyMiddleware({ app, path: config.endpoint });
