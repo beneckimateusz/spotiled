@@ -1,17 +1,35 @@
-const { NODE_ENV, PORT } = process.env;
+import spotifyConfig, { SpotifyConfig } from './spotifyConfig';
+
+const {
+  NODE_ENV,
+  PORT,
+  SESSION_SECRET,
+} = process.env;
+
+if (!PORT) {
+  throw new Error('Please specify PORT environment variable');
+}
+
+if (!SESSION_SECRET) {
+  throw new Error('Please specify SESSION_SECRET environment variable');
+}
 
 type NodeEnv = 'development' | 'production';
 
 interface Config {
-  port?: string;
   nodeEnv?: NodeEnv;
+  port: number;
+  sessionSecret: string;
   endpoint: string;
+  spotify: SpotifyConfig;
 }
 
 const config: Config = {
-  port: PORT,
   nodeEnv: NODE_ENV as NodeEnv,
-  endpoint: '/api'
+  port: Number(PORT),
+  sessionSecret: SESSION_SECRET,
+  endpoint: '/api',
+  spotify: spotifyConfig,
 };
 
 export default { ...config };

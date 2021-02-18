@@ -5,13 +5,22 @@ require('dotenv').config();
 import { ApolloServer } from 'apollo-server-express';
 import http from 'http';
 import 'reflect-metadata';
-import { buildSchema } from 'type-graphql';
+import { buildSchema, Query, Resolver } from 'type-graphql';
 import app from './app';
 import config from './config/config';
 
+@Resolver(String)
+class HelloResolver {
+  @Query(() => String)
+  // eslint-disable-next-line class-methods-use-this
+  hello() {
+    return 'Hello World!';
+  }
+}
+
 async function main() {
   const schema = await buildSchema({
-    resolvers: [], // yet missing
+    resolvers: [HelloResolver], // yet missing
     emitSchemaFile: true,
   });
 
