@@ -1,24 +1,32 @@
+import { ApolloError } from 'apollo-server-express';
 import fetch from 'node-fetch';
 import { Ctx, Query, Resolver } from 'type-graphql';
 import { spotifyApiUrl } from '../../consts';
 import { ApolloContext, SpotifyRegularError } from '../../types';
+import { isRegularError } from '../../utils/guards';
 import { spotifyGetOpts } from '../../utils/utils';
 import CurrentUserProfile from '../schemas/user/CurrentUserProfile';
 
 @Resolver()
 class UserResolver {
-  private userApiUrl = spotifyApiUrl;
-
   @Query((_returns) => CurrentUserProfile)
-  async getCurrentUserProfile(
+  async currentUserProfile(
     @Ctx() ctx: ApolloContext
-  ): Promise<CurrentUserProfile | SpotifyRegularError> {
+  ): Promise<CurrentUserProfile> {
     const response = await fetch(
-      `${this.userApiUrl}/me`,
+      `${spotifyApiUrl}/me`,
       spotifyGetOpts(ctx.user.accessToken)
     );
 
-    return response.json();
+    const data:
+      | CurrentUserProfile
+      | SpotifyRegularError = await response.json();
+
+    if (isRegularError(data)) {
+      throw new ApolloError(data.message, data.status.toString());
+    }
+
+    return data;
   }
 }
 

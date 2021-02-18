@@ -30,5 +30,5 @@ type Image {
 }
 
 type Query {
-  getCurrentUserProfile: CurrentUserProfile!
+  currentUserProfile: CurrentUserProfile!
 }

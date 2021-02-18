@@ -1,5 +1,5 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
-import { baseApiUrl } from './consts';
+import { baseApiUrl } from './lib/consts';
 
 const httpLink = createHttpLink({
   uri: baseApiUrl,

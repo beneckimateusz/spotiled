@@ -1,16 +1,26 @@
 import fetch from 'node-fetch';
 import queryString from 'query-string';
 import config from '../config/config';
-import { spotifyAuthUrl, spotifyRedirectUri, spotifyTokenUrl } from '../consts';
-import { SpotifyAuthenticationError, SpotifyTokensReponse } from '../types';
+import {
+  spotifyAuthUrl,
+  spotifyRedirectProdUri,
+  spotifyRedirectDevUri,
+  spotifyTokenUrl,
+} from '../consts';
+import { SpotifyAuthenticationError, SpotifyTokensResponse } from '../types';
 import { objectToWWWFormUrlEncoded } from './utils';
 
 export const createSpotifyAuthUri = (state: string): string => {
+  const redirectUri =
+    config.nodeEnv === 'production'
+      ? spotifyRedirectProdUri
+      : spotifyRedirectDevUri;
+
   const url = `${spotifyAuthUrl}?${queryString.stringify({
     response_type: 'code',
     client_id: config.spotify.clientId,
     scope: config.spotify.scope,
-    redirect_uri: spotifyRedirectUri,
+    redirect_uri: redirectUri,
     state,
   })}`;
 
@@ -19,7 +29,7 @@ export const createSpotifyAuthUri = (state: string): string => {
 
 export const getSpotifyTokens = async (
   code: string
-): Promise<SpotifyTokensReponse | SpotifyAuthenticationError> => {
+): Promise<SpotifyTokensResponse | SpotifyAuthenticationError> => {
   const encodedClient = Buffer.from(
     `${config.spotify.clientId}:${config.spotify.clientSecret}`
   ).toString('base64');
@@ -27,7 +37,7 @@ export const getSpotifyTokens = async (
   const requestBody = {
     grant_type: 'authorization_code',
     code,
-    redirect_uri: spotifyRedirectUri,
+    redirect_uri: spotifyRedirectDevUri,
   };
 
   const response = await fetch(spotifyTokenUrl, {
@@ -39,12 +49,5 @@ export const getSpotifyTokens = async (
     body: objectToWWWFormUrlEncoded(requestBody),
   });
 
-  const data = await response.json();
-  data.success = response.status === 200;
-
-  if (!data.success) {
-    return data as SpotifyAuthenticationError;
-  }
-
-  return data as SpotifyTokensReponse;
+  return response.json();
 };

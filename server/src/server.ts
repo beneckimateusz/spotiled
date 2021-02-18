@@ -32,7 +32,7 @@ async function main() {
     },
   });
 
-  server.applyMiddleware({ app, path: config.endpoint });
+  server.applyMiddleware({ app, path: config.endpoint, cors: false });
 
   const httpServer = http.createServer(app);
 

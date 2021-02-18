@@ -5,7 +5,7 @@ import session from 'express-session';
 import config from './config/config';
 import spotifyRouter from './routers/spotifyRouter';
 
-const sess: session.SessionOptions = {
+const sessionOptions: session.SessionOptions = {
   secret: config.sessionSecret,
   saveUninitialized: true,
   resave: false,
@@ -14,11 +14,18 @@ const sess: session.SessionOptions = {
   },
 };
 
+const corsOptions: cors.CorsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true,
+};
+
 const app = express();
 
-app.use(cors());
+if (config.nodeEnv !== 'production') {
+  app.use(cors(corsOptions));
+}
 app.use(cookieParser());
-app.use(session(sess));
+app.use(session(sessionOptions));
 
 app.use('/spotify', spotifyRouter);
 

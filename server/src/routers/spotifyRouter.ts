@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import config from '../config/config';
+import { clientDevUrl, clientProdUrl } from '../consts';
 import { createSpotifyAuthUri, getSpotifyTokens } from '../utils/auth';
+import { isAuthError } from '../utils/guards';
 import { generateRandomString } from '../utils/utils';
 
 const router = Router();
@@ -27,14 +29,16 @@ router.get('/callback', async (req, res) => {
 
   const data = await getSpotifyTokens(code as string);
 
-  if (!data.success) {
-    return res.send(data);
+  if (isAuthError(data)) {
+    return res.status(400).send(data);
   }
 
   req.session.accessToken = data.access_token;
   req.session.refreshToken = data.refresh_token;
 
-  return res.send('success');
+  return res.redirect(
+    config.nodeEnv === 'production' ? clientProdUrl : clientDevUrl
+  );
 });
 
 export default router;
