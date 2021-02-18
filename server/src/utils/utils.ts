@@ -17,6 +17,7 @@ export const generateRandomString = (length: number): string => {
   return text;
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 export const objectToWWWFormUrlEncoded = (obj: any) =>
   Object.keys(obj)
     .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`)

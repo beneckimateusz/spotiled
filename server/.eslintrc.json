@@ -3,7 +3,12 @@
     "es6": true,
     "node": true
   },
-  "extends": ["airbnb-base"],
+  "extends": [
+    "airbnb-typescript",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
+  ],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -15,28 +20,16 @@
     "project": "./tsconfig.json"
   },
   "plugins": ["@typescript-eslint"],
+  "settings": {
+    "react": {
+      // unfortunate workaround
+      "version": "999.999.999"
+    }
+  },
   "rules": {
-    "operator-linebreak": "off",
-    "object-curly-newline": "off",
-    "implicit-arrow-linebreak": "off",
-    "comma-dangle": "off",
-    "no-unused-vars": [
+    "@typescript-eslint/no-unused-vars": [
       "error",
       { "argsIgnorePattern": "^_" }
-    ],
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "ts": "never"
-      }
     ]
-  },
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "extensions": [".ts"]
-      }
-    }
   }
 }

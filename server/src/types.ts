@@ -32,5 +32,5 @@ export interface ApolloContext {
   user: {
     accessToken: string;
     refreshToken: string;
-  }
+  };
 }

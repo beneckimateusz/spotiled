@@ -1,10 +1,6 @@
 import spotifyConfig, { SpotifyConfig } from './spotifyConfig';
 
-const {
-  NODE_ENV,
-  PORT,
-  SESSION_SECRET,
-} = process.env;
+const { NODE_ENV, PORT, SESSION_SECRET } = process.env;
 
 if (!PORT) {
   throw new Error('Please specify PORT environment variable');
