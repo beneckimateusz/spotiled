@@ -2,7 +2,7 @@ import { ApolloProvider } from '@apollo/client';
 import { ChakraProvider } from '@chakra-ui/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { client } from '../../apollo';
+import { client } from '../../lib/apollo';
 import { UserProvider } from '../../context/User';
 import Navigation from '../Navigation/Navigation';
 

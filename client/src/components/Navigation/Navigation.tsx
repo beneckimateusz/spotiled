@@ -2,6 +2,7 @@ import { Progress } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import UserContext from '../../context/User';
+import Home from '../Home/Home';
 import Layout from '../Layout/Layout';
 import SignIn from '../SignIn/SignIn';
 
@@ -24,7 +25,7 @@ const Navigation: React.FC = () => {
       ) : (
         <Switch>
           <Route exact path="/">
-            <div>welcome home, {currentUser.display_name}</div>
+            <Home />
           </Route>
           <Redirect to="/" />
         </Switch>

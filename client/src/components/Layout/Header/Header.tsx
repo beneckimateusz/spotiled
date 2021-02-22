@@ -10,8 +10,9 @@ const Header: React.FC = () => {
       bg="green.500"
       color="white"
       boxShadow="md"
-      p={3}
-      mb={4}
+      px={5}
+      py={3}
+      mb={8}
       alignItems="center"
     >
       <Box>
