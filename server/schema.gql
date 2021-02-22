@@ -3,6 +3,16 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Artist implements IArtist {
+  external_urls: ExternalUrls!
+  followers: Followers!
+  genres: [String!]!
+  id: ID!
+  images: [Image!]!
+  name: String!
+  popularity: Int!
+}
+
 """Currently authorized user's profile"""
 type CurrentUserProfile {
   display_name: String!
@@ -23,6 +33,28 @@ type Followers {
   total: Int!
 }
 
+interface IAlbum {
+  album_type: String!
+  external_urls: ExternalUrls!
+  id: ID!
+  images: [Image!]!
+  release_date: String!
+}
+
+interface IArtist {
+  external_urls: ExternalUrls!
+  id: ID!
+  name: String!
+}
+
+interface ITrack {
+  duration_ms: Int!
+  external_urls: ExternalUrls!
+  id: ID!
+  name: String!
+  preview_url: String
+}
+
 type Image {
   height: Int
   url: String!
@@ -31,4 +63,38 @@ type Image {
 
 type Query {
   currentUserProfile: CurrentUserProfile!
+  currentUserTopArtists(timeRange: TimeRange = MEDIUM_TERM): [Artist!]!
+  currentUserTopTracks(timeRange: TimeRange = MEDIUM_TERM): [Track!]!
+}
+
+type SimplifiedAlbum implements IAlbum {
+  album_type: String!
+  artists: [SimplifiedArtist!]!
+  external_urls: ExternalUrls!
+  id: ID!
+  images: [Image!]!
+  release_date: String!
+}
+
+type SimplifiedArtist implements IArtist {
+  external_urls: ExternalUrls!
+  id: ID!
+  name: String!
+}
+
+enum TimeRange {
+  LONG_TERM
+  MEDIUM_TERM
+  SHORT_TERM
+}
+
+type Track implements ITrack {
+  album: SimplifiedAlbum!
+  artists: [Artist!]!
+  duration_ms: Int!
+  external_urls: ExternalUrls!
+  id: ID!
+  name: String!
+  popularity: Int!
+  preview_url: String
 }

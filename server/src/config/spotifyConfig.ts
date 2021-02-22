@@ -13,10 +13,12 @@ export interface SpotifyConfig {
   stateKey: string;
 }
 
+const scope = ['user-read-private', 'user-read-email', 'user-top-read'];
+
 const spotifyConfig = {
   clientId: SPOTIFY_CLIENT_ID,
   clientSecret: SPOTIFY_CLIENT_SECRET,
-  scope: 'user-read-private user-read-email',
+  scope: scope.join(' '),
   stateKey: 'spotify_auth_state',
 };
 

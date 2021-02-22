@@ -3,6 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import session from 'express-session';
 import config from './config/config';
+import { clientDevUrl } from './consts';
 import spotifyRouter from './routers/spotifyRouter';
 
 const sessionOptions: session.SessionOptions = {
@@ -15,7 +16,7 @@ const sessionOptions: session.SessionOptions = {
 };
 
 const corsOptions: cors.CorsOptions = {
-  origin: 'http://localhost:3000',
+  origin: clientDevUrl,
   credentials: true,
 };
 
