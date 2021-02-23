@@ -8,6 +8,7 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import React, { ChangeEvent, useState } from 'react';
+import { FaArrowLeft } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 import { TimeRange, Track } from '../../types';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
@@ -69,19 +70,21 @@ const TopTracksList: React.FC = () => {
     <Container>
       <Stack spacing={5}>
         <HStack spacing={3}>
+          <Button leftIcon={<FaArrowLeft />} onClick={() => history.goBack()}>
+            go back
+          </Button>
           <Select value={timeRange} onChange={handleTimeRangeChange}>
             <option value={TimeRange.SHORT_TERM}>last 4 weeks</option>
             <option value={TimeRange.MEDIUM_TERM}>last 6 months</option>
             <option value={TimeRange.LONG_TERM}>several years</option>
           </Select>
-          <Button onClick={() => history.goBack()}>go back</Button>
         </HStack>
         <Stack>
           {data?.currentUserTopTracks.map((t: Track, index) => (
-            <>
+            <Stack key={t.id}>
               {index > 0 && <Divider />}
-              <TopTracksItem key={t.id} track={t} position={index + 1} />
-            </>
+              <TopTracksItem track={t} position={index + 1} />
+            </Stack>
           ))}
         </Stack>
       </Stack>

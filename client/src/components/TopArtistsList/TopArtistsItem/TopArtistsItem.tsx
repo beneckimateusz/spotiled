@@ -29,7 +29,7 @@ const TopArtistsItem: React.FC<{ position: number; artist: Artist }> = ({
         >
           <Avatar name={artist.name} src={getImageUrl(artist.images)} />
         </Link>
-        <Box>
+        <Box overflow="hidden">
           <Link
             href={artist.external_urls.spotify}
             target="_blank"

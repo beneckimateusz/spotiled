@@ -10,7 +10,7 @@ const SignIn: React.FC = () => {
       : spotifyLoginUrlDev;
 
   return (
-    <Center minH="80vh">
+    <Center h="100%">
       <Link _hover={undefined} href={loginUrl}>
         <Button rightIcon={<FaArrowRight />} colorScheme="green">
           Sign In with Spotify

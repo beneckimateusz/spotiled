@@ -5,12 +5,14 @@ import {
   Heading,
   HStack,
   Link,
+  Spacer,
   Tag,
   Text,
 } from '@chakra-ui/react';
 import React from 'react';
 import { getImageUrl } from '../../../lib/utils';
 import { Artist, Track } from '../../../types';
+import PlayerModal from '../../PlayerModal/PlayerModal';
 
 const TopTracksItem: React.FC<{ position: number; track: Track }> = ({
   position,
@@ -19,7 +21,7 @@ const TopTracksItem: React.FC<{ position: number; track: Track }> = ({
   return (
     <Box>
       <HStack spacing={3}>
-        <Center width="40px">
+        <Center minW="40px">
           <Tag>{position}</Tag>
         </Center>
         <Link
@@ -32,7 +34,7 @@ const TopTracksItem: React.FC<{ position: number; track: Track }> = ({
             src={getImageUrl(track.album.images)}
           />
         </Link>
-        <Box>
+        <Box overflow="hidden">
           <Link
             href={track.external_urls.spotify}
             target="_blank"
@@ -41,12 +43,16 @@ const TopTracksItem: React.FC<{ position: number; track: Track }> = ({
             <Heading size="sm">{track.name}</Heading>
           </Link>
           {track.album.album_type !== 'SINGLE' && (
-            <Text fontSize="sm">from {track.album.name}</Text>
+            <Link href={track.album.external_urls.spotify}>
+              <Text fontSize="sm">from {track.album.name}</Text>
+            </Link>
           )}
           <Text color="gray.500" fontSize="sm">
             {track.artists.map((a: Artist) => a.name).join(', ')}
           </Text>
         </Box>
+        <Spacer />
+        <PlayerModal track={track} />
       </HStack>
     </Box>
   );

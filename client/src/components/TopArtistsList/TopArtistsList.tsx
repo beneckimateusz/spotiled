@@ -10,6 +10,7 @@ import {
 import React, { ChangeEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Artist, TimeRange } from '../../types';
+import { FaArrowLeft } from 'react-icons/fa';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
 import LoadingSkeleton from '../LoadingSkeleton/LoadingSkeleton';
 import TopArtistsItem from './TopArtistsItem/TopArtistsItem';
@@ -60,19 +61,21 @@ const TopArtistsList: React.FC = () => {
     <Container>
       <Stack spacing={5}>
         <HStack spacing={3}>
+          <Button leftIcon={<FaArrowLeft />} onClick={() => history.goBack()}>
+            go back
+          </Button>
           <Select value={timeRange} onChange={handleTimeRangeChange}>
             <option value={TimeRange.SHORT_TERM}>last 4 weeks</option>
             <option value={TimeRange.MEDIUM_TERM}>last 6 months</option>
             <option value={TimeRange.LONG_TERM}>several years</option>
           </Select>
-          <Button onClick={() => history.goBack()}>go back</Button>
         </HStack>
         <Stack>
           {data?.currentUserTopArtists.map((a: Artist, index) => (
-            <>
+            <Stack key={a.id}>
               {index > 0 && <Divider />}
               <TopArtistsItem key={a.id} position={index + 1} artist={a} />
-            </>
+            </Stack>
           ))}
         </Stack>
       </Stack>
