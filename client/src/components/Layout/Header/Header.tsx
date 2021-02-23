@@ -1,4 +1,5 @@
-import { Box, Text, Flex, Heading, Spacer } from '@chakra-ui/react';
+import { Box, Flex, Heading, Spacer, Button, Link } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
 import React from 'react';
 import UserContext from '../../../context/User';
 
@@ -16,13 +17,15 @@ const Header: React.FC = () => {
       alignItems="center"
     >
       <Box>
-        <Heading size="md">spotiled</Heading>
+        <Link as={RouterLink} to="/" _hover={undefined}>
+          <Heading size="md">spotiled</Heading>
+        </Link>
       </Box>
       <Spacer />
       {currentUser && (
-        <Box>
-          <Text fontSize="md">Logged in as {currentUser.display_name}</Text>
-        </Box>
+        <Button variant="link" color="white">
+          sign out
+        </Button>
       )}
     </Flex>
   );

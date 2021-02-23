@@ -5,6 +5,7 @@ import UserContext from '../../context/User';
 import Home from '../Home/Home';
 import Layout from '../Layout/Layout';
 import SignIn from '../SignIn/SignIn';
+import TopArtistsList from '../TopArtistsList/TopArtistsList';
 
 const Navigation: React.FC = () => {
   const { loading, currentUser } = useContext(UserContext);
@@ -26,6 +27,9 @@ const Navigation: React.FC = () => {
         <Switch>
           <Route exact path="/">
             <Home />
+          </Route>
+          <Route exact path="/top-artists">
+            <TopArtistsList />
           </Route>
           <Redirect to="/" />
         </Switch>
