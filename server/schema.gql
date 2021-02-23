@@ -38,6 +38,7 @@ interface IAlbum {
   external_urls: ExternalUrls!
   id: ID!
   images: [Image!]!
+  name: String!
   release_date: String!
 }
 
@@ -73,6 +74,7 @@ type SimplifiedAlbum implements IAlbum {
   external_urls: ExternalUrls!
   id: ID!
   images: [Image!]!
+  name: String!
   release_date: String!
 }
 

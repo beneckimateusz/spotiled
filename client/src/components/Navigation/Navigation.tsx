@@ -6,6 +6,7 @@ import Home from '../Home/Home';
 import Layout from '../Layout/Layout';
 import SignIn from '../SignIn/SignIn';
 import TopArtistsList from '../TopArtistsList/TopArtistsList';
+import TopTracksList from '../TopTracksList/TopTracksList';
 
 const Navigation: React.FC = () => {
   const { loading, currentUser } = useContext(UserContext);
@@ -30,6 +31,9 @@ const Navigation: React.FC = () => {
           </Route>
           <Route exact path="/top-artists">
             <TopArtistsList />
+          </Route>
+          <Route exact path="/top-tracks">
+            <TopTracksList />
           </Route>
           <Redirect to="/" />
         </Switch>

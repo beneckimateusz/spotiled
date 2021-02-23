@@ -8,6 +8,9 @@ abstract class IAlbum {
   id: string;
 
   @Field()
+  name: string;
+
+  @Field()
   album_type: string;
 
   @Field((_type) => ExternalUrls)

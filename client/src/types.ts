@@ -38,6 +38,7 @@ export interface Artist extends SimplifiedArtist {
 interface IAlbum {
   id: string;
   album_type: string;
+  name: string;
   external_urls: ExternalUrls;
   release_date: string;
   images: Image[];

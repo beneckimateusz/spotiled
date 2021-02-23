@@ -10,7 +10,7 @@ const Home: React.FC = () => {
         <UserInfo />
         <SimpleGrid columns={{ sm: 1, md: 2 }} spacing={8}>
           <Tile link="/top-artists">Top Artists</Tile>
-          <Tile link="/whatever">Top Tracks</Tile>
+          <Tile link="/top-tracks">Top Tracks</Tile>
           <Tile link="/whatever">Whatever</Tile>
         </SimpleGrid>
       </Stack>

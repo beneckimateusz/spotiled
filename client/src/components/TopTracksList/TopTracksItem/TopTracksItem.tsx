@@ -10,11 +10,11 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { getImageUrl } from '../../../lib/utils';
-import { Artist } from '../../../types';
+import { Artist, Track } from '../../../types';
 
-const TopArtistsItem: React.FC<{ position: number; artist: Artist }> = ({
+const TopTracksItem: React.FC<{ position: number; track: Track }> = ({
   position,
-  artist,
+  track,
 }) => {
   return (
     <Box>
@@ -23,22 +23,28 @@ const TopArtistsItem: React.FC<{ position: number; artist: Artist }> = ({
           <Tag>{position}</Tag>
         </Center>
         <Link
-          href={artist.external_urls.spotify}
+          href={track.external_urls.spotify}
           target="_blank"
           _hover={undefined}
         >
-          <Avatar name={artist.name} src={getImageUrl(artist.images)} />
+          <Avatar
+            name={track.album.name}
+            src={getImageUrl(track.album.images)}
+          />
         </Link>
         <Box>
           <Link
-            href={artist.external_urls.spotify}
+            href={track.external_urls.spotify}
             target="_blank"
             _hover={undefined}
           >
-            <Heading size="sm">{artist.name}</Heading>
+            <Heading size="sm">{track.name}</Heading>
           </Link>
+          {track.album.album_type !== 'SINGLE' && (
+            <Text fontSize="sm">from {track.album.name}</Text>
+          )}
           <Text color="gray.500" fontSize="sm">
-            {artist.genres.slice(0, 2).join(', ')}
+            {track.artists.map((a: Artist) => a.name).join(', ')}
           </Text>
         </Box>
       </HStack>
@@ -46,4 +52,4 @@ const TopArtistsItem: React.FC<{ position: number; artist: Artist }> = ({
   );
 };
 
-export default TopArtistsItem;
+export default TopTracksItem;
