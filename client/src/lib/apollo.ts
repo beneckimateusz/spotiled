@@ -1,9 +1,10 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
-import { baseApiUrl } from './consts';
+import { baseApiUrl } from './config';
 
 const httpLink = createHttpLink({
   uri: baseApiUrl,
-  credentials: 'include',
+  credentials:
+    process.env.NODE_ENV === 'production' ? 'same-origin' : 'include',
 });
 
 export const client = new ApolloClient({

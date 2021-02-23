@@ -1,12 +1,11 @@
 /* eslint-disable no-unused-vars */
-
 import { registerEnumType } from 'type-graphql';
 
 /* eslint-disable camelcase */
 export interface SpotifyTokensResponse {
   access_token: string;
   token_type: 'Bearer';
-  refresh_token: string;
+  refresh_token?: string;
   expires_in: number;
   scope: string;
 }
@@ -37,13 +36,15 @@ declare module 'express-session' {
   interface SessionData {
     accessToken?: string;
     refreshToken?: string;
+    expiresAt?: string;
   }
 }
 
 export interface ApolloContext {
-  user: {
+  session: {
     accessToken: string;
     refreshToken: string;
+    expiresAt: string;
   };
 }
 

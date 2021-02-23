@@ -1,11 +1,8 @@
-import { Box, Flex, Heading, Spacer, Button, Link } from '@chakra-ui/react';
+import { Box, Flex, Heading, Spacer, Link } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import React from 'react';
-import UserContext from '../../../context/User';
 
 const Header: React.FC = () => {
-  const { currentUser } = React.useContext(UserContext);
-
   return (
     <Flex
       bg="green.500"
@@ -22,11 +19,7 @@ const Header: React.FC = () => {
         </Link>
       </Box>
       <Spacer />
-      {currentUser && (
-        <Button variant="link" color="white">
-          sign out
-        </Button>
-      )}
+      <Box>d-_-b</Box>
     </Flex>
   );
 };

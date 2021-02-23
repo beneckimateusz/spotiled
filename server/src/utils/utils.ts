@@ -1,5 +1,3 @@
-import { RequestInit } from 'node-fetch';
-
 /**
  * Generates a random string containing numbers and letters.
  * @param  {number} length The length of the string
@@ -28,15 +26,3 @@ export const objectToWWWFormUrlEncoded = (obj: any): string =>
   Object.keys(obj)
     .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`)
     .join('&');
-
-/**
- * Creates fetch options object.
- * @param {string} token Access token received from the provider's token endpoint
- * @return {RequestInit} Options for fetch GET request with the token included
- */
-export const spotifyGetOpts = (token: string): RequestInit => ({
-  method: 'GET',
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-});

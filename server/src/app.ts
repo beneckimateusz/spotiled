@@ -1,9 +1,9 @@
+import path from 'path';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
 import session from 'express-session';
 import config from './config/config';
-import { clientDevUrl } from './consts';
 import spotifyRouter from './routers/spotifyRouter';
 
 const sessionOptions: session.SessionOptions = {
@@ -16,23 +16,25 @@ const sessionOptions: session.SessionOptions = {
 };
 
 const corsOptions: cors.CorsOptions = {
-  origin: clientDevUrl,
+  origin: config.clientUrl,
   credentials: true,
 };
 
 const app = express();
+const buildPath = path.join(__dirname, '../build');
 
 if (config.nodeEnv !== 'production') {
   app.use(cors(corsOptions));
 }
 app.use(cookieParser());
 app.use(session(sessionOptions));
+app.use(express.static('build'));
 
 app.use('/spotify', spotifyRouter);
 
 if (config.nodeEnv === 'production') {
   app.get('/*', (_req, res) => {
-    res.send('prod');
+    res.sendFile(path.join(buildPath, 'index.html'));
   });
 }
 

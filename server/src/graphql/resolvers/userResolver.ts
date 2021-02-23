@@ -10,7 +10,7 @@ import {
   TimeRange,
 } from '../../types';
 import { isRegularError } from '../../utils/guards';
-import { spotifyGetOpts } from '../../utils/utils';
+import { maybeRefresh, spotifyGetOpts } from '../../utils/spotifyUtils';
 import Artist from '../schemas/artist/Artist';
 import Track from '../schemas/track/Track';
 import CurrentUserProfile from '../schemas/user/CurrentUserProfile';
@@ -21,9 +21,11 @@ class UserResolver {
   async currentUserProfile(
     @Ctx() ctx: ApolloContext
   ): Promise<CurrentUserProfile> {
+    await maybeRefresh(ctx);
+
     const response = await fetch(
       `${spotifyApiUrl}/me`,
-      spotifyGetOpts(ctx.user.accessToken)
+      spotifyGetOpts(ctx.session.accessToken)
     );
 
     const data:
@@ -45,11 +47,13 @@ class UserResolver {
     timeRange: TimeRange,
     @Ctx() ctx: ApolloContext
   ): Promise<Artist[]> {
+    await maybeRefresh(ctx);
+
     const response = await fetch(
       `${spotifyApiUrl}/me/top/artists?${queryString.stringify({
         time_range: timeRange,
       })}`,
-      spotifyGetOpts(ctx.user.accessToken)
+      spotifyGetOpts(ctx.session.accessToken)
     );
 
     const data:
@@ -71,11 +75,13 @@ class UserResolver {
     timeRange: TimeRange,
     @Ctx() ctx: ApolloContext
   ): Promise<Track[]> {
+    await maybeRefresh(ctx);
+
     const response = await fetch(
       `${spotifyApiUrl}/me/top/tracks?${queryString.stringify({
         time_range: timeRange,
       })}`,
-      spotifyGetOpts(ctx.user.accessToken)
+      spotifyGetOpts(ctx.session.accessToken)
     );
 
     const data:

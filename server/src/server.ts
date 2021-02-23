@@ -26,9 +26,7 @@ async function main() {
         throw new AuthenticationError('not authenticated');
       }
 
-      const user = { accessToken, refreshToken };
-
-      return { user };
+      return { session: req.session };
     },
   });
 

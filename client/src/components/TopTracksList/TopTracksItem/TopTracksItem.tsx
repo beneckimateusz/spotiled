@@ -43,7 +43,7 @@ const TopTracksItem: React.FC<{ position: number; track: Track }> = ({
             <Heading size="sm">{track.name}</Heading>
           </Link>
           {track.album.album_type !== 'SINGLE' && (
-            <Link href={track.album.external_urls.spotify}>
+            <Link href={track.album.external_urls.spotify} target="_blank">
               <Text fontSize="sm">from {track.album.name}</Text>
             </Link>
           )}
