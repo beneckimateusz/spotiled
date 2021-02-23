@@ -1,6 +1,14 @@
 import { gql, useQuery } from '@apollo/client';
-import { Container, Divider, Select, Stack } from '@chakra-ui/react';
+import {
+  Button,
+  Container,
+  Divider,
+  HStack,
+  Select,
+  Stack,
+} from '@chakra-ui/react';
 import React, { ChangeEvent, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { TimeRange, Track } from '../../types';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
 import LoadingSkeleton from '../LoadingSkeleton/LoadingSkeleton';
@@ -47,6 +55,8 @@ const TopTracksList: React.FC = () => {
     setTimeRange(e.target.value as TimeRange);
   };
 
+  const history = useHistory();
+
   const { error, loading, data } = useQuery<CurrentUserTopTracksData>(
     CURRENT_USER_TOP_TRACKS,
     { variables: { timeRange } }
@@ -58,11 +68,14 @@ const TopTracksList: React.FC = () => {
   return (
     <Container>
       <Stack spacing={5}>
-        <Select value={timeRange} onChange={handleTimeRangeChange}>
-          <option value={TimeRange.SHORT_TERM}>Last 4 weeks</option>
-          <option value={TimeRange.MEDIUM_TERM}>Last 6 months</option>
-          <option value={TimeRange.LONG_TERM}>Several years</option>
-        </Select>
+        <HStack spacing={3}>
+          <Select value={timeRange} onChange={handleTimeRangeChange}>
+            <option value={TimeRange.SHORT_TERM}>last 4 weeks</option>
+            <option value={TimeRange.MEDIUM_TERM}>last 6 months</option>
+            <option value={TimeRange.LONG_TERM}>several years</option>
+          </Select>
+          <Button onClick={() => history.goBack()}>go back</Button>
+        </HStack>
         <Stack>
           {data?.currentUserTopTracks.map((t: Track, index) => (
             <>

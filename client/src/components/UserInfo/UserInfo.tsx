@@ -42,7 +42,7 @@ const UserInfo: React.FC = () => {
             <Text color="gray.500">{currentUser.id}</Text>
             <Text>{currentUser.email}</Text>
           </Box>
-          <HStack spacing={5}>
+          <HStack color="gray.600" spacing={5}>
             <Text>
               <Icon as={FaUser} /> {currentUser.followers.total}
             </Text>
