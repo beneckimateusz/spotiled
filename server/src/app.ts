@@ -10,6 +10,7 @@ const sessionOptions: session.SessionOptions = {
   secret: config.sessionSecret,
   saveUninitialized: true,
   resave: false,
+  proxy: config.nodeEnv === 'production',
   cookie: {
     secure: config.nodeEnv === 'production',
   },
@@ -21,6 +22,7 @@ const corsOptions: cors.CorsOptions = {
 };
 
 const app = express();
+app.set('trust proxy', 1);
 const buildPath = path.join(__dirname, '../build');
 
 if (config.nodeEnv !== 'production') {

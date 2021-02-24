@@ -1,10 +1,11 @@
 {
-  "name": "spotify-server",
+  "name": "spotiled-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node build/index.js",
+    "start": "node dist/server.js",
+    "prod": "NODE_ENV=production npm start",
     "tsc": "tsc",
     "dev": "ts-node-dev src/server.ts",
     "lint": "tsc --noEmit && eslint --ext .ts src --fix",
